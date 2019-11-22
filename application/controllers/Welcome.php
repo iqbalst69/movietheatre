@@ -26,15 +26,13 @@ class Welcome extends CI_Controller {
 	function movies(){
 		$this->load->model('Model');
 		$id = $this->input->get('id');
-		$y = $this->input->get('year');
 		if(isset($id)){
-			$data['movies'] = $this->Model->get('tb_movie',['movie_id' => $id])->row_array();
-			$data['movies'][$i]['actors'] = $this->Model->get('tb_actor',['movie_id'=> $d['movie_id']])->result_array();
+			$data['movies'] = $this->Model->get('tb_movie',['movie_id' => $id])->result_array();
 		}else{
 			$data['movies'] = $this->Model->get('tb_movie')->result_array();
-			foreach($data['movies'] as $i => $d){
-				$data['movies'][$i]['actors'] = $this->Model->get('tb_actor',['movie_id'=> $d['movie_id']])->result_array();
-			}
+		}
+		foreach($data['movies'] as $i => $d){
+			$data['movies'][$i]['actors'] = $this->Model->get('tb_actor',['movie_id'=> $d['movie_id']])->result_array();
 		}
 		if($data['movies'] == null){
 			$data['status'] = false;
